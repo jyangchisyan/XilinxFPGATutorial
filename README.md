@@ -110,7 +110,7 @@ python3 scripts/check_jtag.py
 
 目前受管執行環境中的 XSim 會在啟動時回報 `unexpected exception when evaluating tcl command`，
 連只有 `$display` 的最小測試亦相同。系統測試已通過編譯與 elaboration，但尚無執行通過的結果；
-需在可正常啟動 XSim 的環境重跑，也仍需實際上板驗證 DDR2 校準與 LED 行為。
+需在可正常啟動 XSim 的環境重跑。實際上板結果見下方紀錄。
 
 ### 本次建置結果（2026-11-14）
 
@@ -121,7 +121,8 @@ python3 scripts/check_jtag.py
 - 沒有未定義時脈或未約束的內部 endpoints。外部 CPU reset 與 LED 沒有同步 I/O delay 規格。
 - DRC：0 errors、5 warnings。剩餘項目為缺少明確的 `CFGBVS`／`CONFIG_VOLTAGE` 設定（1）、
   已放置 LUT 配對警告（3）、MIG 內部 PLL 的混合 buffer 類型警告（1）。未停用或降低這些檢查的嚴重度；詳見 `build/drc.rpt`。
-- 尚未取得系統模擬執行通過結果；主機終端機已完成 FPGA 下載，DDR2 實際校準與讀寫功能仍須確認。
+- 主機終端機已完成 FPGA 下載，使用者確認 LED[0] 規律閃爍，代表 MicroBlaze BRAM 開機、DDR2 校準、前 4 KiB 讀寫測試與 GPIO 輸出已通過基本上板驗證。
+- 完整 128 MiB DDR2、長時間穩定性及系統模擬執行尚未驗證。
 
 ### 主機燒錄 log 排查（2026-11-14）
 
@@ -134,7 +135,7 @@ python3 scripts/check_jtag.py
 `no supported debug core(s)` 是 Hardware Manager 的 debug core 掃描訊息，不是下載失敗訊息，
 也不能據此判定 MicroBlaze 的 JTAG 除錯是否可用。
 較早 13:59 的 log 曾出現 `No devices detected on target`；後續多次已辨識到 FPGA，
-不能僅憑早期紀錄認定該問題仍存在。成功下載亦不代表 DDR2 韌體測試已成功，仍需確認 LED／測試狀態。
+不能僅憑早期紀錄認定該問題仍存在。後續使用者確認 LED[0] 規律閃爍，已完成目前韌體涵蓋的基本上板驗證。
 
 ## 來源與產生檔
 
@@ -148,4 +149,7 @@ python3 scripts/check_jtag.py
 - `.gen/`、`.cache/`、`.runs/`、`build/`：工具產生內容；優先修改 `.srcs`、韌體或腳本。
 
 不要直接修改 MIG 產生的 RTL。DDR2 設定變更應使用 MIG GUI，並重新產生 IP、驗證與實作。
-# XilinxFPGATutorial
+
+Git 僅保存設計來源、IP 設定、約束、韌體與腳本。`.gen`、`.runs`、快取、log、bitstream、XSA 與 ELF 都可由建置重新產生，因此不上傳。
+從 GitHub clone 後，先確認已安裝 Nexys A7-100T board files，再執行 `make -C firmware` 與上述 `scripts/build.tcl` 指令。
+建置腳本會重新產生 IP output products 與頂層 HDL wrapper，不需要從原電腦複製 `.gen` 目錄。

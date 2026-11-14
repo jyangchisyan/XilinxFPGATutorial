@@ -1,0 +1,16 @@
+/build/
+/.Xil/
+/*.jou
+/*.log
+/*.str
+/FPGAGetStartedAgain.runs/
+/FPGAGetStartedAgain.cache/
+/FPGAGetStartedAgain.sim/
+/FPGAGetStartedAgain.gen/
+/FPGAGetStartedAgain.hw/
+/FPGAGetStartedAgain.ip_user_files/
+*.bda
+*.bd.bak
+**/bd/*/ui/
+__pycache__/
+*.pyc
