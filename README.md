@@ -4,6 +4,8 @@ Nexys A7-100T / Artix-7 (`xc7a100tcsg324-1`)，使用 Vivado / Vitis 2024.2。
 
 想用這個專案學 FPGA，可從 [六課學習教材](docs/courses/README.md) 開始；每課各有一份 Markdown，包含概念、原始碼對照、實作與驗收標準。
 
+也可依目前互動上課的節奏，閱讀 [20 個逐步小單元](docs/courses/steps/README.md)，逐題練習位址、計數、時脈、重置、非阻塞賦值與模組接線。
+
 ## 硬體架構
 
 ```text

@@ -129,6 +129,10 @@ mkdir -p build
 
 原專案的受管執行環境曾在啟動 XSim 時回報 `unexpected exception when evaluating tcl command`，最小測試也有相同現象。如果這個練習也在啟動階段失敗，先於可正常使用 XSim 的主機終端機重跑。模擬器未啟動與 testbench 檢查失敗，需要分開判讀。
 
+### 互動課程的實際結果
+
+使用者已在主機終端機執行本課 testbench：正確版本於 186 ns 回報 PASS；比較條件改成 `COUNT_MAX` 時，於 46 ns 回報 `Wrong LED at cycle 3`；還原後於 186 ns 再次 PASS。這項結果驗證小計數器的目前測試範圍，不代表 CPU／DDR2 的完整系統模擬也已通過。
+
 ## 練習與自我檢查
 
 1. 把參數與預期值一起改成 4，執行至少三次切換。
